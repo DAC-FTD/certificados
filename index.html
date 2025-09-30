@@ -141,6 +141,7 @@
           <option value="Emprendimiento">Emprendimiento</option>
           <option value="Centro para la formación y promoción del deporte universitario">Centro para la formación y promoción del deporte universitario</option>
           <option value="Consultorio Jurídico Gratuito de la UNEMI">Consultorio Jurídico Gratuito de la UNEMI</option>
+          <option value="Servicios Comunitarios">Servicios Comunitarios</option>
         </select>
       </div>
 
@@ -156,7 +157,7 @@
 
       <div class="mb-3">
         <label for="fechaFin" class="form-label">FECHA FIN:</label>
-        <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+        <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
       </div>
 
       <div class="mb-3">
@@ -256,16 +257,15 @@ $(document).ready(function () {
     event.preventDefault();
 
     let formValid = true;
-    const requiredFields = ['#direccionGestion', '#nombreCurso', '#fechaInicio', '#fechaEmision', '#duracion', '#modalidad', '#tipo', '#tipoEvento', '#objetivoPrograma', '#contenidoPrograma'];
+    const requiredFields = ['#direccionGestion', '#nombreCurso', '#fechaInicio', '#fechaFin', '#fechaEmision', '#duracion', '#modalidad', '#tipo', '#tipoEvento', '#objetivoPrograma', '#contenidoPrograma'];
     requiredFields.forEach(field => { if (!$(field).val()) formValid = false; });
 
     const duracion = parseInt($('#duracion').val(), 10);
     const fechaInicio = new Date($('#fechaInicio').val());
-    const fechaEmision=new Date($('#fechaEmision').val());
-    const fechaFinVal = $('#fechaFin').val();
-    const fechaFin = fechaFinVal ? new Date(fechaFinVal) : null;
-if ((fechaFin && fechaInicio > fechaFin) || fechaInicio > fechaEmision || isNaN(duracion) || duracion <= 0) {
-    formValid = false; 
+    const fechaFin = new Date($('#fechaFin').val());
+    const fechaEmi=new Date($('#fechaEmision').val());
+    if (fechaInicio > fechaFin || fechaInicio > fechaEmi || isNaN(duracion) || duracion <= 0) {
+        formValid = false; 
     }
 
     if (!formValid) {
@@ -303,7 +303,7 @@ if ((fechaFin && fechaInicio > fechaFin) || fechaInicio > fechaEmision || isNaN(
         direccionGestion: $('#direccionGestion').val(),
         nombreCurso: $('#nombreCurso').val(),
         fechaInicio: $('#fechaInicio').val(),
-        fechaFin: fechaFinVal ? 'hasta el ' + fechaFinVal : null,
+        fechaFin: $('#fechaFin').val(),
         fechaEmision: $('#fechaEmision').val(),
         duracion: $('#duracion').val(),
         modalidad: $('#modalidad').val(),
@@ -351,4 +351,4 @@ if ((fechaFin && fechaInicio > fechaFin) || fechaInicio > fechaEmision || isNaN(
 </script>
 
 </body>
-</html
+</html>
